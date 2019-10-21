@@ -1,0 +1,64 @@
+--criar database
+create table users(
+	ID SERIAL PRIMARY KEY,
+	Nome varchar(255),
+	Senha varchar(255),
+	Turno varchar(1),
+	Hierarquia varchar(1)
+);
+
+
+
+
+--criar função para adicionar itens na tabela users
+create or replace function users_insert(_Nome character varying, _Senha character varying, _Turno character varying, _Hierarquia character varying )
+returns int as
+$$
+begin 
+	insert into users(Nome, Senha, Turno, Hierarquia)
+	values(_Nome, _Senha, _Turno, _Hierarquia);
+	if found then
+		return 1;
+	else return 0;
+	end if;
+end 
+$$
+language plpgsql
+
+----criar função para dar update nos itens na tabela users
+create or replace function users_update(_id int, _Nome character varying, _Senha character varying, _Turno character varying, _Hierarquia character varying )
+returns int as
+$$
+begin 
+	update users
+	set
+		Nome = _Nome,
+		Senha = _Senha,
+		Turno = _Turno,
+		Hierarquia = _Hierarquia
+	where id = _id;
+	if found then --updated succesfuly
+		return 1;
+	else -- update fail
+		return 0;
+	end if;
+end 
+$$
+language plpgsql
+
+--Adicionar itens na tabela
+select * from users_insert('Fued','123','T','1');
+select * from users_insert('adm','aaa','M','0');
+select * from users_insert('ss','ss','T','1');
+select * from users_insert('ddd','123','T','1');
+
+--Atualizar itens na tabela
+select * from users_update(1,'a','a','T','1');
+
+
+select * from users;
+SELECT Nome, Senha FROM users WHERE Nome = 'fued' and Senha = '123';
+select id from users where nome = 'Fued' and Senha ='123'
+
+
+
