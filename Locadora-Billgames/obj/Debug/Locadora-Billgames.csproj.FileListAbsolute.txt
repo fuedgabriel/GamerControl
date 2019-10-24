@@ -1,7 +1,6 @@
 C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\bin\Debug\Locadora-Billgames.exe.config
 C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\bin\Debug\Locadora-Billgames.exe
 C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\bin\Debug\Locadora-Billgames.pdb
-C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\obj\Debug\Locadora-Billgames.csprojAssemblyReference.cache
 C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\obj\Debug\Locadora_Billgames.Properties.Resources.resources
 C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\obj\Debug\Locadora-Billgames.csproj.GenerateResource.cache
 C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\obj\Debug\Locadora-Billgames.exe
@@ -35,3 +34,6 @@ C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\bin\Debug\
 C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\bin\Debug\System.ValueTuple.xml
 C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\obj\Debug\Locadora_Billgames.BancoDeDados.resources
+C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\obj\Debug\Locadora_Billgames.ControlePreco.resources
+C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\obj\Debug\Locadora_Billgames.ControleConsole.resources
+C:\Users\House\source\GitKraken\Locadora-Billgames\Locadora-Billgames\obj\Debug\Locadora-Billgames.csprojAssemblyReference.cache

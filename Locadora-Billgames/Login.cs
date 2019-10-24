@@ -12,14 +12,10 @@ namespace Locadora_Billgames
 {
     public partial class Login : Form
     {
-        private string connstring = String.Format("Server={0};Port={1};" +
-           "User Id={2};Password={3};Database={4};",
-           "127.0.0.1", 5432, "postgres",
-           "pgadmin", "ControlGamer");
+        private string connstring = Connection.Database();
         private NpgsqlConnection conn;
         private string sql;
         private NpgsqlCommand cmd;
-        private DataTable dt;
 
         public Login()
         {
@@ -31,23 +27,38 @@ namespace Locadora_Billgames
             conn = new NpgsqlConnection(connstring);
         }
 
-        private void VerificarLogin(String User_name, String Pass_word)
+        private string VerificarLogin(string User_name, string Pass_word)
         {
             try
             {
+                NpgsqlDataReader Retorno;
                 conn.Open();
-                sql = String.Format("select Nome, Senha from users where Nome = '{0}' and Senha = '{1}'", User_name, Pass_word);
+                sql = "select id from users where Nome = @User_name and Senha = @Pass_word";
                 cmd = new NpgsqlCommand(sql, conn);
-                dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                conn.Close();
-             
+                cmd.Parameters.Add(new NpgsqlParameter("@User_name", User_name));
+                cmd.Parameters.Add(new NpgsqlParameter("@Pass_word", Pass_word));
+                Retorno = cmd.ExecuteReader(); 
+                
+                if (Retorno.Read())
+                {
+                    int UserId = Retorno.GetInt32(Retorno.GetOrdinal("id"));
+                    conn.Close();
+                    return UserId.ToString();
+                }
+                else
+                {
+                    conn.Close();
+                    return "false"; 
+                }
+
             }
             catch (Exception ex)
             {
                 conn.Close();
-                //MessageBox.Show("Erro: " + ex.Message);
+                MessageBox.Show("Erro: " + ex.Message);
+                return "falseFalse";
             }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -60,19 +71,26 @@ namespace Locadora_Billgames
             }
             else
             {
-                VerificarLogin(User_name, Pass_word);
-                Dashboard Dash = new Dashboard();
-                Dash.Show();
-                this.Hide();
+                string id = VerificarLogin(User_name, Pass_word);
+                if(id == "falseFalse")
+                {
+                    MessageBox.Show("Verifique seu banco de dados. Caso não consiga resolver: \nMande o erro para o suporte: \nContato: https://github.com/fuedgabriel");
+                    
+                }
+                else if(id == "false")
+                {
+                    MessageBox.Show("Usuário ou senha incorreto");
+                }
+                else
+                {
+                    Dashboard.UserId = id;
+                    Dashboard Dash = new Dashboard();
+                    Dash.Show();
+                    this.Hide();
+                }
+                
             }
             
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        
+        }  
     }
 }
