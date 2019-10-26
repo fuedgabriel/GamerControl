@@ -25,7 +25,7 @@ namespace Locadora_Billgames
             InitializeComponent();
             LabelConta.Text = Nome;
             if(Turno == "T") { LabelTurno.Text = "Tarde"; } else if(Turno == "M") { LabelTurno.Text = "Manhã"; }
-            if (Hierarquia == "0") { LabelHierarquia.Text = "Administrador"; }else { LabelHierarquia.Text = "Pa"; }
+            if (Hierarquia == "0") { LabelHierarquia.Text = "Administrador"; }else { LabelHierarquia.Text = "Rei"; }
             
         }
 

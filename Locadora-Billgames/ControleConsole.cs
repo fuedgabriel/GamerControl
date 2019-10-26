@@ -26,11 +26,11 @@ namespace Locadora_Billgames
 
         {
             InitializeComponent();
+            
         }
         private void ControleConsole_Load(object sender, EventArgs e)
         {
             conn = new NpgsqlConnection(connstring);
-            Reload();
         }
 
         private string Adicionar(string Nome, string Local, string Tipo)
@@ -83,9 +83,18 @@ namespace Locadora_Billgames
                 while (Retorno.Read())
                 {
                     string nome = Retorno.GetString(Retorno.GetOrdinal("nome"));
+                    
                     string local = Retorno.GetString(Retorno.GetOrdinal("local"));
                     int id = Retorno.GetInt16(Retorno.GetOrdinal("id"));
-                    Adicionar.Rows.Add(nome +" " +local + " " + id );
+                    if(nome == "0")
+                    {
+
+                    }
+                    else
+                    {
+                        Adicionar.Rows.Add(nome + " " + local + " " + id);
+                    }
+                    
                 }
                 ConsoleBox.DataSource = Adicionar;
                 conn.Close();
@@ -97,27 +106,33 @@ namespace Locadora_Billgames
                 MessageBox.Show("Erro: " + ex.Message);
                 MessageBox.Show("Verifique seu banco de dados. Caso não consiga resolver: \nMande o erro para o suporte: \nContato: https://github.com/fuedgabriel");
             }
-            string[] VetNome = new string[10000];
             try
             {
-                int i = 0;
                 DataTable Adicionar = new DataTable();
                 NpgsqlDataReader Retorno;
                 conn.Open();
-                sql = "select Nome from console;";
+                sql = "SELECT DISTINCT nome FROM console ORDER BY nome";
                 cmd = new NpgsqlCommand(sql, conn);
                 Retorno = cmd.ExecuteReader();
                 Adicionar.Columns.Add("Nome", typeof(string));
-                ConsoleBox.DisplayMember = "Nome";
-                while (Retorno.Read())
+                ConsolePreco.DisplayMember = "Nome";
+
+                if (Retorno.Read())
                 {
-                    VetNome[i] = Retorno.GetString(Retorno.GetOrdinal("nome"));
-                    i++;
+                    while (Retorno.Read())
+                    {
+                        string nome = Retorno.GetString(Retorno.GetOrdinal("nome"));
+                        MessageBox.Show(nome.ToString());
+                        Adicionar.Rows.Add(nome);
+                    }
+                    ConsolePreco.DataSource = Adicionar;
+                    conn.Close();
+
                 }
-                conn.Close();
-                for (int a = 0; a > i; a++)
+                else if(Adicionar.ToString() == "")
                 {
-                    //if (ConsolePreco.Contains(VetNome[a])) 
+                    MessageBox.Show("Não possui dados salvos");
+                    conn.Close();
                 }
             }
             catch(Exception es)
@@ -233,7 +248,7 @@ namespace Locadora_Billgames
                 MessageBox.Show("Possui campos com espaço\nPara o funcionamento do programa é necessário que não possua espaço nos campos de inserção de valores.");
                 goto passo;
             }
-            string VerificarExistencia = Teste.VerificarUnica(ConsoleBoxADD.Text, LocalBox.Text);
+            string VerificarExistencia = Teste.VerificarUnica(NomeAlter.Text, LocalAlter.Text);
             if (VerificarExistencia == "True")
             {
                 MessageBox.Show("Este valor já existe, digite outro.");
@@ -256,7 +271,7 @@ namespace Locadora_Billgames
                     cmd.Parameters.Add(new NpgsqlParameter("@Tipo", TipoAlter.Text));
                     cmd.Parameters.Add(new NpgsqlParameter("@id", Convert.ToInt16(selecionado[2])));
                     Retorno = cmd.ExecuteReader();
-                    if (Retorno.Read() == false)
+                    if (Retorno.Read() == true)
                     {
                         conn.Close();
 

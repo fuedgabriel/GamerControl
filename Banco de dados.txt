@@ -69,6 +69,59 @@ $$
 language plpgsql
 
 
+create or replace function console_update(_id int, _Nome character varying, _Local character varying, _Tipo character varying)
+returns int as
+$$
+begin 
+	update console set Nome = _Nome, local = _Local, Tipo = _Tipo where id = _id;
+	if found then --updated succesfuly
+		return 1;
+	else -- update fail
+		return 0;
+	end if;
+end 
+$$
+language plpgsql
+
+insert into console(nome,local,tipo) values ('0', '0', '0');	
+
+-----------------------------------------------------------------------------------------------
+
+create table preco(
+	id serial not null,
+	valor decimal,
+	nome varchar(255)
+)
+
+create or replace function preco_insert(_Nome character varying, _Valor decimal)
+returns int as
+$$
+begin 
+	insert into preco(valor, nome) values(_Valor, _Nome);
+	if found then
+		return 1;
+	else return 0;
+	end if;
+end 
+$$
+language plpgsql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 --Adicionar itens na tabela

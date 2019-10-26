@@ -73,16 +73,16 @@ namespace Locadora_Billgames
             }
         }
 
-        public string VerificarUnica(string valor, string local)
+        public string VerificarUnica(string Nome, string local)
         {
             conn = new NpgsqlConnection(connstring);
             try
             {
                 NpgsqlDataReader Retorno;
                 conn.Open();
-                sql = "select * from console where nome = @Valor and local = @Local";
+                sql = "select * from console where nome = @Nome and local = @Local";
                 cmd = new NpgsqlCommand(sql, conn);
-                cmd.Parameters.Add(new NpgsqlParameter("@Valor", valor));
+                cmd.Parameters.Add(new NpgsqlParameter("@Nome", Nome));
                 cmd.Parameters.Add(new NpgsqlParameter("@Local", local));
                 Retorno = cmd.ExecuteReader();
                 if (Retorno.Read())
