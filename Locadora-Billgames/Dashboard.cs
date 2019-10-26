@@ -49,7 +49,9 @@ namespace Locadora_Billgames
 
         private void button1_Click(object sender, EventArgs e)
         {
+            controleConsole1.Reload();
             controleConsole1.Show();
+            
         }
     }
 }

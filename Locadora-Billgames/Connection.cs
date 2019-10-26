@@ -33,8 +33,9 @@ namespace Locadora_Billgames
                 conn = new NpgsqlConnection(connstring);
                 NpgsqlDataReader Retorno;
                 conn.Open();
-                sql = String.Format("select * from users where id = '{0}'", id);
+                sql = "select * from users where id = @ID";
                 cmd = new NpgsqlCommand(sql, conn);
+                cmd.Parameters.Add(new NpgsqlParameter("@ID", Convert.ToInt32(id)));
                 Retorno = cmd.ExecuteReader();
                 string retorna = null;
                 if (Retorno.Read())
@@ -72,16 +73,17 @@ namespace Locadora_Billgames
             }
         }
 
-        public string VerificarUnica(string tabela, string coluna, string valor)
+        public string VerificarUnica(string valor, string local)
         {
             conn = new NpgsqlConnection(connstring);
             try
             {
                 NpgsqlDataReader Retorno;
                 conn.Open();
-                sql = String.Format("select * from {0} where {1} = @Valor", tabela, coluna);
+                sql = "select * from console where nome = @Valor and local = @Local";
                 cmd = new NpgsqlCommand(sql, conn);
                 cmd.Parameters.Add(new NpgsqlParameter("@Valor", valor));
+                cmd.Parameters.Add(new NpgsqlParameter("@Local", local));
                 Retorno = cmd.ExecuteReader();
                 if (Retorno.Read())
                 {

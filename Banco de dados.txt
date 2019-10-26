@@ -45,6 +45,31 @@ begin
 end 
 $$
 language plpgsql
+--------------------------------------------------------------------------------------------------------------------------------
+
+create table console(
+			ID serial primary key,
+			Nome varchar(255),
+			Local varchar(255),
+			Tipo varchar(255)
+			);
+			
+			
+create or replace function console_insert(_Nome character varying, _Local character varying, _Tipo character varying)
+returns int as
+$$
+begin 
+	insert into console(Nome, Local, Tipo) values(_Nome, _Local, _Tipo);
+	if found then
+		return 1;
+	else return 0;
+	end if;
+end 
+$$
+language plpgsql
+
+
+
 
 --Adicionar itens na tabela
 select * from users_insert('Fued','123','T','1');
